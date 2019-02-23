@@ -1,17 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
+const conn = require('./config.js').localConnect();
 const app = express();
-
-const SELECT_ALL_USERS = 'SELECT * FROM user';
-
-const conn = mysql.createConnection({
-	host:'localhost',
-	user:'root',
-	password:'P!zzaboy12',
-	database:'portfolio'
-});
 
 conn.connect(err => { 
   if (err) throw err;
@@ -26,29 +16,31 @@ app.get('/', (req, res) => {
 });
 
 app.get('/user', (req, res) => {
+	const SELECT_ALL_USERS = 'CALL portfolio.selectAllUsers()';
 	conn.query(SELECT_ALL_USERS, (err, results) => {
 		if (err) throw err;
 		res.json({
-			data: results
+			data: results[0]
 		});
 	});
 });
 
 app.get('/user/addUser', (req, res) => {
-	const { name, age, image } = req.query;
-	const ADD_USER = `INSERT INTO user (name, age, image) VALUES ('${name}','${age}','${image}');`;
-	
-	conn.query(ADD_USER, (err, results) => {
+	let CREATE_USER = "CALL portfolio.createUser(`?, ?, ?)`";
+	conn.query(CREATE_USER, (err, results) => {
 		if (err) throw res.send(err);
 	});
 });
 
-app.get('/user/removeUser', (res, req) => {
+app.get('/user/deleteUser', (res, req) => {
 	const { name } = req.query;
-	const DELETE_USER_BY_NAME = `DELETE FROM user WHERE name='${name}'`;
+	const DELETE_USER_BY_NAME = 'DELETE from members where id = '+name+'';
 
 	conn.query(DELETE_USER_BY_NAME, (err, results) => {
-		if(err) throw res.send(err);
+		if (err) throw res.send(err);
+		res.json({
+			data: results
+		});
 	});
 });
 

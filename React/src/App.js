@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import './App.css';
 
 class App extends Component {
@@ -8,8 +7,8 @@ class App extends Component {
       allUsers: [],
       user: {
         name: '',
-        age: '',
-        image: ''
+        email: '',
+        password: ''
       },
     }
 
@@ -20,19 +19,27 @@ class App extends Component {
   getUser = _ => {
     fetch(`http://localhost:4000/user`)
     .then(response => response.json())
-    .then(response => this.setState({ allUsers: response.data} ))
+    .then(response => this.setState({ allUsers: response.data }))
     .catch(err => console.error(err))
   }
 
   addUser = _ => {
     const { user } = this.state;
-    fetch(`http://localhost:4000/user/addUser?name=${user.name}&age=${user.age}&image=${user.image}`)
+    fetch(`http://localhost:4000/user/addUser?name=${user.name}&email=${user.email}&password=${user.password}`)
     .then(response => response.json())
     .then(this.getUser())
     .catch(err => console.error(err))
   }
 
-  renderUser = ({ id, name, age }) => <div key={id}>{name} {age}</div>
+  deleteUser = _ => {
+    const { user } = this.state;
+    fetch(`http://localhost:4000/user/deleteUser?name=${user.name}`)
+    .then(response => response.json())
+    .then(this.getUser())
+    .catch(err => console.error(err))
+  }
+
+  renderUser = ({ id, name, email }) => <div key={id}>Name: {name} | Email: {email}</div>
 
 render() {
     const { allUsers, user } = this.state
@@ -46,9 +53,12 @@ render() {
           onChange={e => this.setState({user: { ...user, name: e.target.value }})} />
         <input 
           value={user.age} 
-          onChange={e => this.setState({user: { ...user, age: e.target.value }})} />
+          onChange={e => this.setState({user: { ...user, email: e.target.value }})} />
 
         <button onClick={this.addUser}>Add</button>
+        
+        <button onClick={this.deleteUser}>Delete</button>
+
       </div>
     </div>
     );
