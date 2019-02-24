@@ -39,15 +39,16 @@ class MyVerticallyCenteredModal extends Component {
   }
 }
 
-
 class App extends Component {
   state = {
     allUsers: [],
+
     user: {
       name: '',
       email: '',
       password: ''
     },
+
     modalShow: false
   }
 
@@ -76,6 +77,14 @@ class App extends Component {
       .then(response => response.json())
       .then(this.getUser())
       .catch(err => console.error(err))
+  }
+
+  login = _ => {
+    const { user } = this.state;
+    fetch(`http://localhost:4000/user/addUser?email=${user.email}&password=${user.password}`)
+    .then(response => response.json())
+    .then(this.getUser())
+    .catch(err => console.error(err))
   }
 
   renderUserId = ({ id }) => <tr key={id}> {id} </tr>
@@ -120,11 +129,11 @@ class App extends Component {
               value={user.password}
               onChange={e => this.setState({ user: { ...user, password: e.target.value } })} className=" mr-sm-2" />
 
-            <Button type="submit" onClick={this.deleteUser}>Submit</Button>
+            <Button type="submit" onClick={this.login}>Login</Button>
           </Form>
 
         </Navbar>
-        
+
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
@@ -166,49 +175,3 @@ class App extends Component {
 
 
 export default App;
-
-
-/*
-<Carousel.Caption>
-          <Form>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" value={user.name}
-                onChange={e => this.setState({ user: { ...user, name: e.target.value } })} />
-              <Form.Text className="text-muted">
-              </Form.Text>
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" value={user.password}
-                onChange={e => this.setState({ user: { ...user, password: e.target.value } })} />
-            </Form.Group>
-
-             <Form.Group controlId="formBasicChecbox">
-                  <Form.Check type="checkbox" label="-- I might do nothing with this --" />
-                </Form.Group>
-
-                <Button variant="primary" type="submit"> Login </Button>
-
-                <Button variant='Primary' onClick={this.deleteUser}>Delete</Button>
-
-
-                <ButtonToolbar>
-                  <Button
-                    variant="primary"
-                    onClick={() => this.setState({ modalShow: true })}
-                  >
-                    Launch vertically centered modal
-            </Button>
-
-                  <MyVerticallyCenteredModal
-                    show={this.state.modalShow}
-                    onHide={modalClose}
-                  />
-                </ButtonToolbar>
-
-
-              </Form>
-            </Carousel.Caption>
-*/
