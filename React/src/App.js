@@ -11,7 +11,7 @@ import {
   Image
 } from 'react-bootstrap';
 import './App.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 class MyVerticallyCenteredModal extends Component {
@@ -138,7 +138,34 @@ class App extends Component {
 
         </Navbar>
 
-        <Table striped bordered hover variant="dark">
+        
+
+        <Navbar sticky="bottom" bg="dark" variant="dark">
+              <ButtonToolbar>
+                <Button
+                  variant="success"
+                  onClick={() => this.setState({ modalShow: true })}
+                >
+                  Register
+            </Button>
+
+                <MyVerticallyCenteredModal
+                  show={this.state.modalShow}
+                  onHide={modalClose}
+                />
+              </ButtonToolbar>
+              </Navbar>
+         
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+/*
+<Table striped bordered hover variant="dark">
           <thead>
             <tr>
               <th>#</th>
@@ -155,29 +182,4 @@ class App extends Component {
 
           </tbody>
         </Table>
-
-        <div className="navbar navbar-default navbar-fixed-bottom">
-          <div className="container">
-            <p className="navbar-text pull-left">
-              <ButtonToolbar>
-                <Button
-                  variant="success"
-                  onClick={() => this.setState({ modalShow: true })}
-                >
-                  Register
-            </Button>
-
-                <MyVerticallyCenteredModal
-                  show={this.state.modalShow}
-                  onHide={modalClose}
-                />
-              </ButtonToolbar>
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-export default App;
+*/
