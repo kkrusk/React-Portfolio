@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const mysql = require('mysql');
 const conn = require('./config.js').localConnect();
 const app = express();
 
@@ -26,21 +27,24 @@ app.get('/user', (req, res) => {
 });
 
 app.get('/user/addUser', (req, res) => {
-	let CREATE_USER = "CALL portfolio.createUser(`?, ?, ?)`";
-	conn.query(CREATE_USER, (err, results) => {
+	const { name, email, password } = req.query;
+	let CREATE_USER = `INSERT INTO user(name, email, password) VALUES(?,?,?)`;
+	const send = [name, email, password];
+	CREATE_USER = mysql.format(CREATE_USER, send);
+
+	conn.query(CREATE_USER, send,  (err, results) => {
 		if (err) throw res.send(err);
 	});
 });
 
 app.get('/user/deleteUser', (res, req) => {
 	const { name } = req.query;
-	const DELETE_USER_BY_NAME = 'DELETE from members where id = '+name+'';
+	let DELETE_USER_BY_NAME = 'DELETE FROM user where id = ?';
+	const send = [name];
+	DELETE_USER_BY_NAME = mysql.format(CREATE_USER, send);
 
 	conn.query(DELETE_USER_BY_NAME, (err, results) => {
 		if (err) throw res.send(err);
-		res.json({
-			data: results
-		});
 	});
 });
 
