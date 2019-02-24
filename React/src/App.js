@@ -1,21 +1,29 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import {
   ButtonToolbar,
   Button,
   Form,
   Navbar,
   FormControl,
-  Table,
   Modal,
-  Image
+  Carousel
 } from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { MDBContainer, MDBBtn, MDBIcon } from 'mdbreact';
 
 
 class MyVerticallyCenteredModal extends Component {
+  state = {
+    user: {
+      name: '',
+      email: '',
+      password: ''
+    }
+  }
+
   render() {
+    const { user } = this.state
     return (
       <Modal
         {...this.props}
@@ -23,19 +31,49 @@ class MyVerticallyCenteredModal extends Component {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
+
+        <Modal.Title id="contained-modal-title-vcenter modal-tit" align='center'>
+          Register Now!
           </Modal.Title>
-        </Modal.Header>
+
+
         <Modal.Body>
-          <h4>Register</h4>
-          <p>
-            This is going to be a register page
-          </p>
+          <FormControl
+            placeholder="Name"
+            aria-label="Name"
+            aria-describedby="basic-addon1"
+            type="text"
+            value={user.name}
+            onChange={e => this.setState({ user: { ...user, name: e.target.value } })}
+          />
+
+          <FormControl
+            placeholder="Email"
+            aria-label="Email"
+            aria-describedby="basic-addon1"
+            type="text"
+            value={user.email}
+            onChange={e => this.setState({ user: { ...user, email: e.target.value } })}
+          />
+
+          <FormControl
+            placeholder="Password"
+            aria-label="Password"
+            aria-describedby="basic-addon1"
+            type="password"
+            value={user.password}
+            onChange={e => this.setState({ user: { ...user, password: e.target.value } })}
+          />
         </Modal.Body>
+
         <Modal.Footer>
-          <Button onClick={this.props.onHide}>Close</Button>
+
+        <MDBContainer>
+      <a href="#!" className="fb-ic mr-3">
+        <MDBIcon fab icon="facebook-f" />
+      </a>
+      </MDBContainer>
+
         </Modal.Footer>
       </Modal>
     );
@@ -99,9 +137,9 @@ class App extends Component {
     let modalClose = () => this.setState({ modalShow: false });
 
     return (
-      <div className='App' style={{ backgroundColor: "#44014C", width: "100%", minHeight: "100%"}}>
-
-        <Navbar bg="dark" variant="dark">
+      <div className='App' style={{ backgroundColor: "#44014C", width: "100%", minHeight: "100%" }}>
+      
+        <Navbar bg="dark" variant="dark" sticky='top'>
           <Navbar.Brand href="#home">
             <img
               alt=""
@@ -138,24 +176,74 @@ class App extends Component {
 
         </Navbar>
 
-        
+        <Carousel>
 
-        <Navbar sticky="bottom" bg="dark" variant="dark">
-              <ButtonToolbar>
-                <Button
-                  variant="success"
-                  onClick={() => this.setState({ modalShow: true })}
-                >
-                  Register
+          <Carousel.Item>
+            <img
+              src="https://picsum.photos/1920/850/?random"
+              alt="First slide"
+              padding='0'
+              display='block'
+              margin='0 auto'
+              max-height='100%'
+              max-width='100%'
+            />
+            <Carousel.Caption>
+              <h3>First slide label</h3>
+              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <img
+              padding='0'
+              display='block'
+              margin='0 auto'
+              max-height='100%'
+              max-width='100%'
+              src="https://picsum.photos/1920/851/?random"
+              alt="Third slide"
+            />
+            <Carousel.Caption>
+              <h3>Second slide label</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <img
+              padding='0'
+              display='block'
+              margin='0 auto'
+              max-height='100%'
+              max-width='100%'
+              src="https://picsum.photos/1920/852/?random"
+              alt="Third slide"
+            />
+            <Carousel.Caption>
+              <h3>Third slide label</h3>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+
+        </Carousel>
+
+        <Navbar fixed="bottom" bg="dark" variant="dark" >
+          <ButtonToolbar>
+            <Button
+              variant="success"
+              onClick={() => this.setState({ modalShow: true })}
+            >
+              Register
             </Button>
 
-                <MyVerticallyCenteredModal
-                  show={this.state.modalShow}
-                  onHide={modalClose}
-                />
-              </ButtonToolbar>
-              </Navbar>
-         
+            <MyVerticallyCenteredModal
+              show={this.state.modalShow}
+              onHide={modalClose}
+            />
+          </ButtonToolbar>
+        </Navbar>
+
       </div>
     );
   }
@@ -182,4 +270,5 @@ export default App;
 
           </tbody>
         </Table>
+
 */
