@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import {
   ButtonToolbar,
   Button,
@@ -6,17 +7,19 @@ import {
   Navbar,
   FormControl,
   Table,
-  Modal
+  Modal,
+  Image
 } from 'react-bootstrap';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 
 class MyVerticallyCenteredModal extends Component {
   render() {
     return (
       <Modal
         {...this.props}
-        size="lg"
+        size="sm"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -81,22 +84,23 @@ class App extends Component {
 
   login = _ => {
     const { user } = this.state;
-    fetch(`http://localhost:4000/user/addUser?email=${user.email}&password=${user.password}`)
-    .then(response => response.json())
-    .then(this.getUser())
-    .catch(err => console.error(err))
+    fetch(`http://localhost:4000/user/login?email=${user.email}&password=${user.password}`)
+      .then(response => response.json())
+      .then(this.getUser())
+      .catch(err => console.error(err))
   }
 
-  renderUserId = ({ id }) => <tr key={id}> {id} </tr>
-  renderUserName = ({ id, name }) => <tr key={id}> {name} </tr>
-  renderUserEmail = ({ id, email }) => <tr key={id}> {email} </tr>
+  renderUserId = ({ id }) => <tr key={id}>{id}</tr>
+  renderUserName = ({ id, name }) => <tr key={id}>{name}</tr>
+  renderUserEmail = ({ id, email }) => <tr key={id}>{email}</tr>
 
   render() {
     const { allUsers, user } = this.state;
     let modalClose = () => this.setState({ modalShow: false });
 
     return (
-      <div className='App'>
+      <div className='App' style={{ backgroundColor: "#44014C", width: "100%", minHeight: "100%"}}>
+
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand href="#home">
             <img
@@ -143,21 +147,24 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-            <th>{allUsers.map(this.renderUserId)}</th>
-            <th>{allUsers.map(this.renderUserName)}</th>
-            <th>{allUsers.map(this.renderUserEmail)}</th>
+
+            <td>{allUsers.map(this.renderUserId)}</td>
+            <td>{allUsers.map(this.renderUserName)}</td>
+            <td>{allUsers.map(this.renderUserEmail)}</td>
+
+
           </tbody>
         </Table>
 
-        <div class="navbar navbar-default navbar-fixed-bottom">
-          <div class="container">
-            <p class="navbar-text pull-left">
+        <div className="navbar navbar-default navbar-fixed-bottom">
+          <div className="container">
+            <p className="navbar-text pull-left">
               <ButtonToolbar>
                 <Button
-                  variant="primary"
+                  variant="success"
                   onClick={() => this.setState({ modalShow: true })}
                 >
-                  Launch vertically centered modal
+                  Register
             </Button>
 
                 <MyVerticallyCenteredModal
@@ -172,6 +179,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;

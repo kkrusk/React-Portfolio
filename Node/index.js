@@ -37,6 +37,17 @@ app.get('/user/addUser', (req, res) => {
 	});
 });
 
+app.get('/user/deleteUser', (res, req) => {
+	const { name } = req.query;
+	let DELETE_USER_BY_NAME = 'DELETE FROM user where id = ?';
+	const send = [name];
+	DELETE_USER_BY_NAME = mysql.format(CREATE_USER, send);
+
+	conn.query(DELETE_USER_BY_NAME, send, (err, results) => {
+		if (err) throw res.send(err)		
+	});
+});
+
 app.get('/user/login', (res, req) => {
 	const { name, password } = req.query;
 	let LOGIN_USER = 'SELECT * FROM USER WHERE name = ? AND password = ?';
@@ -50,18 +61,6 @@ app.get('/user/login', (res, req) => {
 		});
 	})
 })
-
-app.get('/user/deleteUser', (res, req) => {
-	const { name } = req.query;
-	let DELETE_USER_BY_NAME = 'DELETE FROM user where id = ?';
-	const send = [name];
-	DELETE_USER_BY_NAME = mysql.format(CREATE_USER, send);
-
-	conn.query(DELETE_USER_BY_NAME, send, (err, results) => {
-		if (err) throw res.send(err);
-		
-	});
-});
 
 // /Paths -----------------------------
 
