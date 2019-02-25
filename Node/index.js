@@ -1,12 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
+let bcrypt = require('bcrypt');
+let saltRounds = 10;
 const conn = require('./config.js').localConnect();
 const app = express();
 
-conn.connect(err => { 
-  if (err) throw err;
-  console.log("Connected!");
+conn.connect(err => {
+	if (err) throw err;
+	console.log("Connected!");
 });
 
 app.use(cors());
@@ -17,7 +19,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/user', (req, res) => {
-	const SELECT_ALL_USERS = 'CALL portfolio.selectAllUsers()';
+	let SELECT_ALL_USERS = 'CALL portfolio.selectAllUsers()';
+	SELECT_ALL_USERS = mysql.format(SELECT_ALL_USERS);
+
 	conn.query(SELECT_ALL_USERS, (err, results) => {
 		if (err) throw err;
 		res.json({
@@ -29,39 +33,44 @@ app.get('/user', (req, res) => {
 app.get('/user/addUser', (req, res) => {
 	const { name, email, password } = req.query;
 	let CREATE_USER = `INSERT INTO user(name, email, password) VALUES(?,?,?)`;
-	const send = [name, email, password];
-	CREATE_USER = mysql.format(CREATE_USER, send);
+	let input = [name, email, password];
+	
+	bcrypt.hash(input[2], saltRounds, function (err, hash) {
+		if (err) throw err;
+		input[2] = hash;
+		CREATE_USER = mysql.format(CREATE_USER, input);
+		conn.query(CREATE_USER, input, (err, results) => {
+			if (err) throw err
+		})
+	});		
+})
 
-	conn.query(CREATE_USER, send,  (err, results) => {
-		if (err) throw res.send(err);
-	});
-});
+
 
 app.get('/user/deleteUser', (res, req) => {
 	const { id } = req.query;
-	let DELETE_USER_BY_NAME = 'DELETE FROM user where id = ?';
-	const send = [id];
-	DELETE_USER_BY_NAME = mysql.format(CREATE_USER, send);
+	let DELETE_USER_BY_NAME = 'CALL deleteUser(?)';
+	const input = [id];
+	DELETE_USER_BY_NAME = mysql.format(DELETE_USER_BY_NAME, input);
 
-	conn.query(DELETE_USER_BY_NAME, send, (err, results) => {
-		if (err) throw res.send(err)		
+	conn.query(DELETE_USER_BY_NAME, input, (err, results) => {
+		if (err) throw err
 	});
 });
 
-app.get('/user/userLogin', (res, req) => {
+app.get('/user/login', (res, req) => {
 	const { email, password } = req.query;
-	let LOGIN_USER = `SELECT * FROM user WHERE email = ? AND password = ?`;
-	const send = [email, password];
-	LOGIN_USER = mysql.format(LOGIN_USER, send);
+	let LOGIN_USER = 'SELECT * FROM USER WHERE email = ? AND password = ?';
+	const input = [email, password];
+	LOGIN_USER = mysql.format(LOGIN_USER, input);
 
-	conn.query(LOGIN_USER, (err, results) => {
-		if (err) throw res.send(err);
+	conn.query(LOGIN_USER, input, (err, results) => {
+		if (err) throw err
 		res.json({
-			data: results
+			data: results[0]
 		});
-	});
-});
-
+	})
+})
 
 // /Paths -----------------------------
 

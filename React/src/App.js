@@ -1,14 +1,12 @@
 import './App.css';
 import React, { Component } from 'react';
 import {
-  ButtonToolbar,
   Button,
   Form,
   Navbar,
   FormControl,
   Modal,
-  Carousel,
-  InputGroup
+  Carousel
 } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
