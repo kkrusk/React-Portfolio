@@ -125,7 +125,6 @@ class App extends Component {
     const { user } = this.state;
     fetch(`http://localhost:4000/user/login?email=${user.email}&password=${user.password}`)
       .then(response => response.json())
-      .then(console.log('')
       .catch(err => console.error(err))
   }
 
@@ -140,8 +139,9 @@ class App extends Component {
     return (
       <div className='App'>
 
-        <Navbar  bg="dark" variant="dark" className="justify-content-between">
+        <Navbar bg="dark" variant="dark" className="justify-content-between">
           <Form inline>
+
           <Navbar.Brand href="#home">
             <img
               alt=""
@@ -151,33 +151,38 @@ class App extends Component {
               className="d-inline-block align-top"
             />
             {' kkPortfolio'}
-
           </Navbar.Brand>
+
+          
+            <Button variant="success" onClick={() => this.setState({ modalShow: true })}> Register </Button>
+
+            <MyVerticallyCenteredModal
+              show={this.state.modalShow}
+              onHide={modalClose}
+            />
+          
           </Form>
           <Form inline>
             <FormControl  
             size='sm'
-            placeholder="Email/Username"
-            aria-label="Email/Username"
-            aria-describedby="basic-addon1"
-            type="password"
-            value={user.password}
-            onChange={e => this.setState({ user: { ...user, password: e.target.value } })} 
+            placeholder="Email"        
+            type="text"
+            value={user.email}
+            onChange={e => this.setState({ user: { ...user, email: e.target.value } })} 
             className="text-center mr-sm-2" 
             />
  
             <FormControl 
             size='sm'
             placeholder="Password"
-            aria-label="Password"
-            aria-describedby="basic-addon1"
+            
             type="password"
             value={user.password}
             onChange={e => this.setState({ user: { ...user, password: e.target.value } })} 
             className="text-center mr-sm-2"
              />
 
-            <Button size='sm' type="submit">Login</Button>
+            <Button size='sm' onClick={this.login}>Login</Button>
           </Form>
           
         </Navbar>
@@ -307,5 +312,20 @@ export default App;
             onChange={e => this.setState({ user: { ...user, password: e.target.value } })} className=" mr-sm-2" />
 
           <Button size='sm' type="submit" onClick={this.login}>Login</Button>
+
+<ButtonToolbar>
+            <Button
+
+              variant="success"
+              onClick={() => this.setState({ modalShow: true })}
+            >
+              Register
+            </Button>
+
+            <MyVerticallyCenteredModal
+              show={this.state.modalShow}
+              onHide={modalClose}
+            />
+          </ButtonToolbar>
 
     */

@@ -38,9 +38,9 @@ app.get('/user/addUser', (req, res) => {
 });
 
 app.get('/user/deleteUser', (res, req) => {
-	const { name } = req.query;
+	const { id } = req.query;
 	let DELETE_USER_BY_NAME = 'DELETE FROM user where id = ?';
-	const send = [name];
+	const send = [id];
 	DELETE_USER_BY_NAME = mysql.format(CREATE_USER, send);
 
 	conn.query(DELETE_USER_BY_NAME, send, (err, results) => {
@@ -48,19 +48,20 @@ app.get('/user/deleteUser', (res, req) => {
 	});
 });
 
-app.get('/user/login', (res, req) => {
-	const { name, email, password } = req.query;
-	let LOGIN_USER = 'SELECT * FROM USER WHERE name = ? OR email = ? AND password = ?';
-	const send = [name, email, password];
+app.get('/user/userLogin', (res, req) => {
+	const { email, password } = req.query;
+	let LOGIN_USER = `SELECT * FROM user WHERE email = ? AND password = ?`;
+	const send = [email, password];
 	LOGIN_USER = mysql.format(LOGIN_USER, send);
 
-	conn.query(LOGIN_USER, send, (err, results) => {
+	conn.query(LOGIN_USER, (err, results) => {
 		if (err) throw res.send(err);
 		res.json({
-			data: results[0]
+			data: results
 		});
-	})
-})
+	});
+});
+
 
 // /Paths -----------------------------
 
