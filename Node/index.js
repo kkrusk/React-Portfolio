@@ -33,15 +33,17 @@ app.get('/user/addUser', (req, res) => {
 	const { name, email, password } = req.query;
 	let CREATE_USER = `INSERT INTO user(name, email, password) VALUES(?,?,?)`;
 	let input = [name, email, password];
-	
+
 	bcrypt.hash(input[2], saltRounds, function (err, hash) {
 		if (err) throw err;
 		input[2] = hash;
+		console.log(input[2]);
 		CREATE_USER = mysql.format(CREATE_USER, input);
 		conn.query(CREATE_USER, input, (err, results) => {
 			if (err) throw err
+
 		});
-	});	
+	});
 });
 
 app.get('/user/deleteUser', (req, res) => {
@@ -57,18 +59,23 @@ app.get('/user/deleteUser', (req, res) => {
 
 app.get('/user/login', (req, res) => {
 	const { email, password } = req.query;
-	let LOGIN_USER = 'SELECT * FROM USER WHERE email = ? AND password = ?';
-	const input = [email, password];
-
-	bcrypt.compare(input[1], hash, function(err, res) {
+	let LOGIN_USER_EMAIL = `SELECT * FROM user WHERE email = ?`;
+	let em = [email];
+	LOGIN_USER_EMAIL = mysql.format(LOGIN_USER_EMAIL, em);
+	conn.query(LOGIN_USER_EMAIL, em, (err, results) => {
 		if (err) throw err;
-		input[1] = hash;
-		LOGIN_USER = mysql.format(LOGIN_USER, input);
-		conn.query(LOGIN_USER, input, (err, results) => {
-			if (err) throw err
-			res.json({
-				data: results[0]
-			});
+		let user = JSON.parse(JSON.stringify(results[0]));
+		let hash = JSON.parse(JSON.stringify(results[0].password));
+		console.log(hash);
+
+		bcrypt.compare(password, hash, function (err, acceptedPassword) {
+			if (err) throw err;
+			if (acceptedPassword) {
+				console.log('madeit');
+				res.json({
+					data: results[0]
+				});
+			};
 		});
 	});
 });
