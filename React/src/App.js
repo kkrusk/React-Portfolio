@@ -7,7 +7,8 @@ import {
   Navbar,
   FormControl,
   Modal,
-  Carousel
+  Carousel,
+  InputGroup
 } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -47,6 +48,8 @@ class MyVerticallyCenteredModal extends Component {
 
         <Modal.Body>
           <FormControl
+            className='text-center'
+            size='sm'
             placeholder="Name"
             aria-label="Name"
             aria-describedby="basic-addon1"
@@ -56,6 +59,8 @@ class MyVerticallyCenteredModal extends Component {
           />
 
           <FormControl
+            className='text-center'
+            size='sm'
             placeholder="Email"
             aria-label="Email"
             aria-describedby="basic-addon1"
@@ -65,6 +70,8 @@ class MyVerticallyCenteredModal extends Component {
           />
 
           <FormControl
+            className='text-center'
+            size='sm'
             placeholder="Password"
             aria-label="Password"
             aria-describedby="basic-addon1"
@@ -106,14 +113,6 @@ class App extends Component {
       .catch(err => console.error(err))
   }
 
-  addUser = _ => {
-    const { user } = this.state;
-    fetch(`http://localhost:4000/user/addUser?name=${user.name}&email=${user.email}&password=${user.password}`)
-      .then(response => response.json())
-      .then(this.getUser())
-      .catch(err => console.error(err))
-  }
-
   deleteUser = _ => {
     const { user } = this.state;
     fetch(`http://localhost:4000/user/deleteUser?id=${user.id}`)
@@ -126,7 +125,7 @@ class App extends Component {
     const { user } = this.state;
     fetch(`http://localhost:4000/user/login?email=${user.email}&password=${user.password}`)
       .then(response => response.json())
-      .then(this.getUser())
+      .then(console.log('')
       .catch(err => console.error(err))
   }
 
@@ -141,7 +140,8 @@ class App extends Component {
     return (
       <div className='App'>
 
-        <Navbar bg="dark" variant="dark" sticky='top'>
+        <Navbar  bg="dark" variant="dark" className="justify-content-between">
+          <Form inline>
           <Navbar.Brand href="#home">
             <img
               alt=""
@@ -153,28 +153,33 @@ class App extends Component {
             {' kkPortfolio'}
 
           </Navbar.Brand>
-
-          <FormControl
+          </Form>
+          <Form inline>
+            <FormControl  
             size='sm'
-            placeholder="Email"
-            aria-label="Email"
+            placeholder="Email/Username"
+            aria-label="Email/Username"
             aria-describedby="basic-addon1"
-            type="text"
-            value={user.email}
-            onChange={e => this.setState({ user: { ...user, email: e.target.value } })}
-          />
-
-          <FormControl
+            type="password"
+            value={user.password}
+            onChange={e => this.setState({ user: { ...user, password: e.target.value } })} 
+            className="text-center mr-sm-2" 
+            />
+ 
+            <FormControl 
             size='sm'
             placeholder="Password"
             aria-label="Password"
             aria-describedby="basic-addon1"
             type="password"
             value={user.password}
-            onChange={e => this.setState({ user: { ...user, password: e.target.value } })} className=" mr-sm-2" />
+            onChange={e => this.setState({ user: { ...user, password: e.target.value } })} 
+            className="text-center mr-sm-2"
+             />
 
-          <Button size='sm' type="submit" onClick={this.login}>Login</Button>
-
+            <Button size='sm' type="submit">Login</Button>
+          </Form>
+          
         </Navbar>
 
         <Carousel>
@@ -228,26 +233,19 @@ class App extends Component {
 
         </Carousel>
 
-        <Navbar fixed="bottom" bg="dark" variant="dark">
+        <Navbar fixed="bottom" bg="dark" variant="dark" className="justify-content-between">
+        <div>
+        
+        </div>
 
-          <ButtonToolbar>
-            <Button
+        <div>
+        <SocialIcon url="http://github.com/kkrusk" />
+        <SocialIcon url="https://www.linkedin.com/in/kyle-kruskamp-441645148/" />
+        </div>
 
-              variant="success"
-              onClick={() => this.setState({ modalShow: true })}
-            >
-              Register
-            </Button>
+        <div>
 
-            <MyVerticallyCenteredModal
-              show={this.state.modalShow}
-              onHide={modalClose}
-            />
-          </ButtonToolbar>
-
-          <SocialIcon url="http://github.com/kkrusk" />
-          <SocialIcon url="https://www.linkedin.com/in/kyle-kruskamp-441645148/" />
-
+        </div>
         </Navbar>
 
       </div>
@@ -275,5 +273,39 @@ export default App;
 
       </tbody>
     </Table>
+
+<Navbar.Brand href="#home">
+            <img
+              alt=""
+              src="https://picsum.photos/200/300/?random"
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />
+            {' kkPortfolio'}
+
+          </Navbar.Brand>
+
+          <FormControl
+
+            size='sm'
+            placeholder="Email"
+            aria-label="Email"
+            aria-describedby="basic-addon1"
+            type="text"
+            value={user.email}
+            onChange={e => this.setState({ user: { ...user, email: e.target.value } })}
+          />
+
+          <FormControl
+            size='sm'
+            placeholder="Password"
+            aria-label="Password"
+            aria-describedby="basic-addon1"
+            type="password"
+            value={user.password}
+            onChange={e => this.setState({ user: { ...user, password: e.target.value } })} className=" mr-sm-2" />
+
+          <Button size='sm' type="submit" onClick={this.login}>Login</Button>
 
     */
