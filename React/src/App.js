@@ -1,3 +1,4 @@
+import './App.css';
 import React, { Component } from 'react';
 import {
   ButtonToolbar,
@@ -8,10 +9,10 @@ import {
   Modal,
   Carousel
 } from 'react-bootstrap';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { MDBContainer, MDBBtn, MDBIcon } from 'mdbreact';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { MDBInput } from 'mdbreact';
+import { SocialIcon } from 'react-social-icons';
 
 class MyVerticallyCenteredModal extends Component {
   state = {
@@ -22,9 +23,17 @@ class MyVerticallyCenteredModal extends Component {
     }
   }
 
+  addUser = _ => {
+    const { user } = this.state;
+    fetch(`http://localhost:4000/user/addUser?name=${user.name}&email=${user.email}&password=${user.password}`)
+      .then(response => response.json())
+      .catch(err => console.error(err))
+  }
+
   render() {
     const { user } = this.state
     return (
+
       <Modal
         {...this.props}
         size="sm"
@@ -32,10 +41,9 @@ class MyVerticallyCenteredModal extends Component {
         centered
       >
 
-        <Modal.Title id="contained-modal-title-vcenter modal-tit" align='center'>
+        <Modal.Title id="contained-modal-title-vcenter " align='center'>
           Register Now!
           </Modal.Title>
-
 
         <Modal.Body>
           <FormControl
@@ -66,14 +74,8 @@ class MyVerticallyCenteredModal extends Component {
           />
         </Modal.Body>
 
-        <Modal.Footer>
-
-        <MDBContainer>
-      <a href="#!" className="fb-ic mr-3">
-        <MDBIcon fab icon="facebook-f" />
-      </a>
-      </MDBContainer>
-
+        <Modal.Footer id='m-footer'>
+          <Button align='center' variant="success" onClick={this.addUser}> Submit </Button>
         </Modal.Footer>
       </Modal>
     );
@@ -137,8 +139,8 @@ class App extends Component {
     let modalClose = () => this.setState({ modalShow: false });
 
     return (
-      <div className='App' style={{ backgroundColor: "#44014C", width: "100%", minHeight: "100%" }}>
-      
+      <div className='App'>
+
         <Navbar bg="dark" variant="dark" sticky='top'>
           <Navbar.Brand href="#home">
             <img
@@ -149,35 +151,33 @@ class App extends Component {
               className="d-inline-block align-top"
             />
             {' kkPortfolio'}
+
           </Navbar.Brand>
 
-          <Form inline>
-            <FormControl
-              placeholder="Email"
-              aria-label="Email"
-              aria-describedby="basic-addon1"
-              type="text"
-              value={user.email}
-              onChange={e => this.setState({ user: { ...user, email: e.target.value } })}
-            />
-          </Form>
+          <FormControl
+            size='sm'
+            placeholder="Email"
+            aria-label="Email"
+            aria-describedby="basic-addon1"
+            type="text"
+            value={user.email}
+            onChange={e => this.setState({ user: { ...user, email: e.target.value } })}
+          />
 
-          <Form inline>
-            <FormControl
-              placeholder="Password"
-              aria-label="Password"
-              aria-describedby="basic-addon1"
-              type="password"
-              value={user.password}
-              onChange={e => this.setState({ user: { ...user, password: e.target.value } })} className=" mr-sm-2" />
+          <FormControl
+            size='sm'
+            placeholder="Password"
+            aria-label="Password"
+            aria-describedby="basic-addon1"
+            type="password"
+            value={user.password}
+            onChange={e => this.setState({ user: { ...user, password: e.target.value } })} className=" mr-sm-2" />
 
-            <Button type="submit" onClick={this.login}>Login</Button>
-          </Form>
+          <Button size='sm' type="submit" onClick={this.login}>Login</Button>
 
         </Navbar>
 
         <Carousel>
-
           <Carousel.Item>
             <img
               src="https://picsum.photos/1920/850/?random"
@@ -228,9 +228,11 @@ class App extends Component {
 
         </Carousel>
 
-        <Navbar fixed="bottom" bg="dark" variant="dark" >
+        <Navbar fixed="bottom" bg="dark" variant="dark">
+
           <ButtonToolbar>
             <Button
+
               variant="success"
               onClick={() => this.setState({ modalShow: true })}
             >
@@ -242,6 +244,10 @@ class App extends Component {
               onHide={modalClose}
             />
           </ButtonToolbar>
+
+          <SocialIcon url="http://github.com/kkrusk" />
+          <SocialIcon url="https://www.linkedin.com/in/kyle-kruskamp-441645148/" />
+
         </Navbar>
 
       </div>
@@ -251,24 +257,23 @@ class App extends Component {
 
 export default App;
 
-
 /*
 <Table striped bordered hover variant="dark">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
 
-            <td>{allUsers.map(this.renderUserId)}</td>
-            <td>{allUsers.map(this.renderUserName)}</td>
-            <td>{allUsers.map(this.renderUserEmail)}</td>
+        <td>{allUsers.map(this.renderUserId)}</td>
+        <td>{allUsers.map(this.renderUserName)}</td>
+        <td>{allUsers.map(this.renderUserEmail)}</td>
 
 
-          </tbody>
-        </Table>
+      </tbody>
+    </Table>
 
-*/
+    */

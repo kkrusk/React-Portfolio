@@ -49,9 +49,9 @@ app.get('/user/deleteUser', (res, req) => {
 });
 
 app.get('/user/login', (res, req) => {
-	const { name, password } = req.query;
-	let LOGIN_USER = 'SELECT * FROM USER WHERE name = ? AND password = ?';
-	const send = [name, password];
+	const { name, email, password } = req.query;
+	let LOGIN_USER = 'SELECT * FROM USER WHERE name = ? OR email = ? AND password = ?';
+	const send = [name, email, password];
 	LOGIN_USER = mysql.format(LOGIN_USER, send);
 
 	conn.query(LOGIN_USER, send, (err, results) => {
