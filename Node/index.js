@@ -13,7 +13,6 @@ conn.connect(err => {
 
 app.use(cors());
 
-// Paths -----------------------------
 app.get('/', (req, res) => {
 	console.log('Made it');
 });
@@ -41,14 +40,12 @@ app.get('/user/addUser', (req, res) => {
 		CREATE_USER = mysql.format(CREATE_USER, input);
 		conn.query(CREATE_USER, input, (err, results) => {
 			if (err) throw err
-		})
-	});		
-})
+		});
+	});	
+});
 
-
-
-app.get('/user/deleteUser', (res, req) => {
-	const { id } = req.query;
+app.get('/user/deleteUser', (req, res) => {
+	const { id } = req.query.id;
 	let DELETE_USER_BY_NAME = 'CALL deleteUser(?)';
 	const input = [id];
 	DELETE_USER_BY_NAME = mysql.format(DELETE_USER_BY_NAME, input);
@@ -58,19 +55,23 @@ app.get('/user/deleteUser', (res, req) => {
 	});
 });
 
-app.get('/user/login', (res, req) => {
+app.get('/user/login', (req, res) => {
 	const { email, password } = req.query;
 	let LOGIN_USER = 'SELECT * FROM USER WHERE email = ? AND password = ?';
 	const input = [email, password];
-	LOGIN_USER = mysql.format(LOGIN_USER, input);
 
-	conn.query(LOGIN_USER, input, (err, results) => {
-		if (err) throw err
-		res.json({
-			data: results[0]
+	bcrypt.compare(input[1], hash, function(err, res) {
+		if (err) throw err;
+		input[1] = hash;
+		LOGIN_USER = mysql.format(LOGIN_USER, input);
+		conn.query(LOGIN_USER, input, (err, results) => {
+			if (err) throw err
+			res.json({
+				data: results[0]
+			});
 		});
-	})
-})
+	});
+});
 
 // /Paths -----------------------------
 
