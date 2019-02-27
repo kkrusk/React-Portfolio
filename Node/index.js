@@ -64,7 +64,6 @@ app.get('/user/login', (req, res) => {
 	LOGIN_USER_EMAIL = mysql.format(LOGIN_USER_EMAIL, em);
 	conn.query(LOGIN_USER_EMAIL, em, (err, results) => {
 		if (err) throw err;
-		let user = JSON.parse(JSON.stringify(results[0]));
 		let hash = JSON.parse(JSON.stringify(results[0].password));
 		console.log(hash);
 
