@@ -1,14 +1,14 @@
 import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.css";
 import { NavLink } from "react-router-dom";
 import { NavItem } from "reactstrap";
 import {
   MDBNavbar,
-  MDBNavbarBrand,
   MDBNavbarNav,
   MDBCollapse,
-  MDBContainer,
   MDBHamburgerToggler
 } from "mdbreact";
+import Clocks from "./clock.jsx";
 
 class Navbar extends Component {
   state = {
@@ -31,30 +31,30 @@ class Navbar extends Component {
 
   render() {
     return (
-      <div>
-        <MDBNavbar Dark sticky="top">
-          <MDBHamburgerToggler
-            color="#d3531a"
-            id="hamburger1"
-            onClick={() => this.toggleSingleCollapse("collapse1")}
-          />
-          <MDBCollapse isOpen={this.state.collapse1} navbar>
-            <MDBNavbarNav left>
-              <NavItem>
-                <NavLink exact to="/">
-                  Home
-                </NavLink>
-              </NavItem>
+      <MDBNavbar className="fixed-top">
+        <Clocks />
+        <MDBHamburgerToggler
+          color="#FFFFF"
+          id="hamburger1"
+          onClick={() => this.toggleSingleCollapse("collapse1")}
+        />
 
-              <NavItem>
-                <NavLink exact to="/Projects">
-                  Projects
-                </NavLink>
-              </NavItem>
-            </MDBNavbarNav>
-          </MDBCollapse>
-        </MDBNavbar>
-      </div>
+        <MDBCollapse isOpen={this.state.collapse1} navbar>
+          <MDBNavbarNav left>
+            <NavItem>
+              <NavLink className="text-white" exact to="/">
+                Home
+              </NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink className="text-white" exact to="/Projects">
+                Projects
+              </NavLink>
+            </NavItem>
+          </MDBNavbarNav>
+        </MDBCollapse>
+      </MDBNavbar>
     );
   }
 }
