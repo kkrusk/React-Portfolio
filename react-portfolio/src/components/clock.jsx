@@ -8,7 +8,7 @@ class Clocks extends React.Component {
         className="text-white"
         format={"HH:mm:ss"}
         ticking={true}
-        timezone={"US/Eastern"}
+        timezone={"US/Central"}
       />
     );
   }

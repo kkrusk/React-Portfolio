@@ -32,12 +32,13 @@ class Navbar extends Component {
   render() {
     return (
       <MDBNavbar className="fixed-top">
-        <Clocks />
         <MDBHamburgerToggler
           color="#FFFFF"
           id="hamburger1"
           onClick={() => this.toggleSingleCollapse("collapse1")}
         />
+
+        <Clocks />
 
         <MDBCollapse isOpen={this.state.collapse1} navbar>
           <MDBNavbarNav left>
@@ -48,8 +49,20 @@ class Navbar extends Component {
             </NavItem>
 
             <NavItem>
-              <NavLink className="text-white" exact to="/Projects">
+              <NavLink className="text-white" exact to="/projects">
                 Projects
+              </NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink className="text-white" exact to="/login">
+                Login
+              </NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink className="text-white" exact to="/register">
+                Register
               </NavLink>
             </NavItem>
           </MDBNavbarNav>

@@ -4,6 +4,7 @@ import "./App.css";
 import CarouselPage from "./components/carousel.jsx";
 import Navbar from "./components/navbar.jsx";
 import Footer from "./components/footer.jsx";
+import LoginModal from "./components/loginModal.jsx";
 
 // YOU DON'T CARE ABOUT THIS
 class App extends Component {
@@ -69,7 +70,9 @@ class Dashboard extends Component {
 
         <div className="content">
           <Route exact path="/" component={Home} />
-          <Route exact path="/Projects" component={Projects} />
+          <Route exact path="/projects" component={Projects} />
+          <Route exact path="/login" component={Projects} />
+          <Route exact path="/register" component={Projects} />
         </div>
 
         <Footer />
@@ -78,17 +81,38 @@ class Dashboard extends Component {
   }
 }
 
-// This is what you really care about
 class Home extends Component {
   render() {
     return <CarouselPage className="test" />;
   }
 }
 
-// This is what you could care about
 class Projects extends Component {
   render() {
     return <CarouselPage />;
+  }
+}
+
+class Login extends Component {
+  state = {
+    model14: false
+  };
+
+  toggle = nr => () => {
+    let modalNumber = "modal" + nr;
+    this.setState({
+      [modalNumber]: !this.state[modalNumber]
+    });
+  };
+
+  render() {
+    return <LoginModal />;
+  }
+}
+
+class Register extends Component {
+  render() {
+    return <h1>This is the Register modal</h1>;
   }
 }
 
