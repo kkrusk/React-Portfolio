@@ -32,30 +32,27 @@ class Navbar extends Component {
   render() {
     return (
       <div>
-        <MDBNavbar color="amber lighten-4" style={{ marginTop: "20px" }} light>
-          <MDBContainer>
-            <MDBNavbarBrand>MDBNavbar</MDBNavbarBrand>
-            <MDBHamburgerToggler
-              color="#d3531a"
-              id="hamburger1"
-              onClick={() => this.toggleSingleCollapse("collapse1")}
-            />
-            <MDBCollapse isOpen={this.state.collapse1} navbar>
-              <MDBNavbarNav left>
-                <NavItem>
-                  <NavLink exact to="/">
-                    Home
-                  </NavLink>
-                </NavItem>
+        <MDBNavbar Dark sticky="top">
+          <MDBHamburgerToggler
+            color="#d3531a"
+            id="hamburger1"
+            onClick={() => this.toggleSingleCollapse("collapse1")}
+          />
+          <MDBCollapse isOpen={this.state.collapse1} navbar>
+            <MDBNavbarNav left>
+              <NavItem>
+                <NavLink exact to="/">
+                  Home
+                </NavLink>
+              </NavItem>
 
-                <NavItem>
-                  <NavLink exact to="/Projects">
-                    Projects
-                  </NavLink>
-                </NavItem>
-              </MDBNavbarNav>
-            </MDBCollapse>
-          </MDBContainer>
+              <NavItem>
+                <NavLink exact to="/Projects">
+                  Projects
+                </NavLink>
+              </NavItem>
+            </MDBNavbarNav>
+          </MDBCollapse>
         </MDBNavbar>
       </div>
     );

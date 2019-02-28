@@ -13,14 +13,7 @@ const FooterPage = () => {
               content.
             </p>
           </MDBCol>
-          <MDBCol md="6">
-            <h5 className="title">Links</h5>
-            <ul>
-              <li className="list-unstyled">
-                <a href="#!">Link 1</a>
-              </li>
-            </ul>
-          </MDBCol>
+          <MDBCol md="6" />
         </MDBRow>
       </MDBContainer>
       <div className="footer-copyright text-center py-3">

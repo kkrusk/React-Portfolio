@@ -6,7 +6,7 @@ import Navbar from "./components/navbar.jsx";
 import Footer from "./components/footer.jsx";
 
 // YOU DON'T CARE ABOUT THIS
-class App extends React.Component {
+class App extends Component {
   state = {
     allUsers: [],
 
@@ -61,7 +61,7 @@ class App extends React.Component {
 }
 
 // This is what you really care about
-class Dashboard extends React.Component {
+class Dashboard extends Component {
   render() {
     return (
       <div>
@@ -79,14 +79,14 @@ class Dashboard extends React.Component {
 }
 
 // This is what you really care about
-class Home extends React.Component {
+class Home extends Component {
   render() {
-    return <CarouselPage />;
+    return <CarouselPage className="test" />;
   }
 }
 
 // This is what you could care about
-class Projects extends React.Component {
+class Projects extends Component {
   render() {
     return <CarouselPage />;
   }
