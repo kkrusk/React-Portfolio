@@ -1,15 +1,14 @@
 import React from "react";
 import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 import { SocialIcon } from "react-social-icons";
-import LoginModal from "./loginModal.jsx";
 
 const FooterPage = () => {
   return (
-    <MDBFooter color="blue" className="font-small pt-4 mt-4">
+    <MDBFooter className="font-small pt-4 mt-4">
       <MDBContainer fluid className="text-center text-md-left">
         <MDBRow>
           <MDBCol md="6" />
-          <LoginModal />
+
           <MDBCol md="6" />
         </MDBRow>
       </MDBContainer>

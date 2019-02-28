@@ -4,32 +4,15 @@ import {
   MDBBtn,
   MDBModal,
   MDBModalBody,
-  MDBModalHeader,
   MDBModalFooter
 } from "mdbreact";
 
 class LoginModal extends Component {
-  state = {
-    modal14: false
-  };
-
-  toggle = nr => () => {
-    let modalNumber = "modal" + nr;
-    this.setState({
-      [modalNumber]: !this.state[modalNumber]
-    });
-  };
-
   render() {
+    const { model14, onClick } = this.props;
     return (
       <MDBContainer>
-        <MDBModal
-          size="sm"
-          isOpen={this.state.modal14}
-          toggle={this.toggle(14)}
-          centered
-        >
-          <MDBModalHeader toggle={this.toggle(14)}>Login</MDBModalHeader>
+        <MDBModal size="sm" isOpen={model14} toggle={onClick} centered>
           <MDBModalBody>Login Here</MDBModalBody>
           <MDBModalFooter>
             <MDBBtn color="primary">Login</MDBBtn>
