@@ -8,8 +8,8 @@ import {
   MDBCollapse,
   MDBHamburgerToggler
 } from "mdbreact";
-import Clocks from "./clock.jsx";
-import LoginModal from "./loginModal.jsx";
+import Clocks from "./Clock.jsx";
+import LoginModal from "./LoginModal.jsx";
 
 class Navbar extends Component {
   state = {
@@ -52,6 +52,7 @@ class Navbar extends Component {
 
           <MDBCollapse isOpen={this.state.collapse1} navbar>
             <MDBNavbarNav left>
+
               <NavItem>
                 <NavLink className="text-white" exact to="/">
                   Home
@@ -65,20 +66,11 @@ class Navbar extends Component {
               </NavItem>
 
               <NavItem>
-                <NavLink
-                  className="text-white"
-                  exact
-                  to="#"
-                  onClick={() => (
-                    <LoginModal
-                      model={this.state.model14}
-                      onClick={this.state.toggle}
-                    />
-                  )}
-                >
+                <NavLink className="text-white" exact to="/login">
                   Login
                 </NavLink>
               </NavItem>
+
             </MDBNavbarNav>
           </MDBCollapse>
         </MDBNavbar>

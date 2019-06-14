@@ -14,7 +14,8 @@ conn.connect(err => {
 app.use(cors());
 
 app.get('/', (req, res) => {
-	console.log('Made it');
+	res.send('This is confirmation we are connected');
+	console.log('This is confirmation we are connected');
 });
 
 app.get('/user', (req, res) => {

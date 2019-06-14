@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
-import CarouselPage from "./components/carousel.jsx";
-import Navbar from "./components/navbar.jsx";
-import Footer from "./components/footer.jsx";
+import CarouselPage from "./components/Carousel.jsx";
+import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx";
+import LoginModal from "./components/LoginModal.jsx";
 
-// YOU DON'T CARE ABOUT THIS
 class App extends Component {
   state = {
     allUsers: [],
@@ -24,7 +24,7 @@ class App extends Component {
   getUser = _ => {
     fetch(`http://localhost:4000/user`)
       .then(response => response.json())
-      .then(response => this.setState({ allUsers: response.data }))
+      .then(response => this.setState({allUsers: response.data}))
       .catch(err => console.error(err));
   };
 
@@ -60,7 +60,6 @@ class App extends Component {
   }
 }
 
-// This is what you really care about
 class Dashboard extends Component {
   render() {
     return (
@@ -70,6 +69,7 @@ class Dashboard extends Component {
         <div className="content">
           <Route exact path="/" component={Home} />
           <Route exact path="/projects" component={Projects} />
+          <Route exact path="/login" component={Login} />
         </div>
 
         <Footer />
@@ -86,8 +86,20 @@ class Home extends Component {
 
 class Projects extends Component {
   render() {
+    return ( 
+      <React.Fragment>
+        <CarouselPage />      
+      </React.Fragment>
+      
+    )
+  }
+}
+
+class Login extends Component {
+  render() {
     return <CarouselPage />;
   }
 }
+
 
 export default App;

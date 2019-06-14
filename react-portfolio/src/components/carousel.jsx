@@ -7,25 +7,18 @@ import {
   CarouselCaption
 } from "reactstrap";
 
-function randomNumber() {
-  return Math.floor(Math.random() * 10 + 1);
-}
-
 const items = [
   {
-    src: "https://picsum.photos/1920/1079/?random",
-    altText: "Slide 1",
-    caption: "Slide 1"
+    src: "https://picsum.photos/2561/1080/?random",
+    
   },
   {
-    src: "https://picsum.photos/1920/1080/?random",
-    altText: "Slide 2",
-    caption: "Slide 2"
+    src: "https://picsum.photos/2560/1080/?random",
+    
   },
   {
-    src: "https://picsum.photos/1920/1081/?random",
-    altText: "Slide 3",
-    caption: "Slide 3"
+    src: "https://picsum.photos/2562/1080/?random",
+    
   }
 ];
 
@@ -84,7 +77,7 @@ class CarouselPage extends Component {
           <img src={item.src} alt={item.altText} />
           <CarouselCaption
             captionText={item.caption}
-            captionHeader={item.caption}
+            captionHeader={item.altText}
           />
         </CarouselItem>
       );

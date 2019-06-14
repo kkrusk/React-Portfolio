@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Clock from "react-live-clock";
 
 class Clocks extends React.Component {
